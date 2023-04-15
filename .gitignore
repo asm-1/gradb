@@ -1,2 +1,9 @@
 
 .DS_Store
+/gradb.vcxproj.user
+/gradb.vcxproj.filters
+/gradb.sln
+/gradb.vcxproj
+/x64/Debug
+/.vs
+/Debug
