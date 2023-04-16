@@ -1,44 +1,23 @@
 #include <vector>
 #include <string>
+#include <iostream>
+#include "node.cpp"
 
-enum data_type
-{
-	Str,
-	Int,
-	Bool,
-	Node_1,
-};
 
-class MetaField
-{
-	public:
-		MetaField(){};
-		~MetaField(){};
-};
-
-class Field{
-	private:
-		data_type type;
-	public:
-		Field(){};
-		~Field(){};
-};
-
-class Node{
-	private:
-		data_type type;
-	public:
-		MetaField meta;
-		std::vector<Field> fields;
-		std::string name;
-
-		Node(){};
-		~Node(){};
-};
-
+using std::cout;
 
 int main(int argc, char const *argv[])
 {
-	Node node;
+	Node n;
+	for (const auto& container : n.fields)
+	{
+	    if (std::holds_alternative<IntField>(container)) {
+	        std::cout << "int value: " << std::get<IntField>(container).value << std::endl;
+	    } else if (std::holds_alternative<BoolField>(container)) {
+	        std::cout << "double value: " << std::get<BoolField>(container).value << std::endl;
+	    } else if (std::holds_alternative<StringField>(container)) {
+	        std::cout << "string value: " << std::get<StringField>(container).value << std::endl;
+	    }
+	}
 	return 0;
 };
