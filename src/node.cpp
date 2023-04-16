@@ -1,6 +1,7 @@
 #include "field.cpp"
 #include <memory>
 #include "edge.cpp"
+#include <variant>
 
 class Node{
 	private:
