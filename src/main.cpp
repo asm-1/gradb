@@ -2,22 +2,41 @@
 #include <string>
 #include <iostream>
 #include "node.cpp"
+#include <fstream>
+#include <string>
+#include "../lib/json.hpp"
+#include "../include/messages.h"
 
+using namespace std;
+using json = nlohmann::json;
 
-using std::cout;
+void ReadDBFile(string file_name) {
+	std::ifstream DB_file(file_name);
+
+	if (!DB_file.good()) {
+		//If user file not exist, create a new empty one
+		cout << E0001 << "\n";
+		cout << W0001 << "\n";
+
+		std::ofstream new_DB_file("DB.json");
+		new_DB_file << "{\"Nodes\": []}\n";
+		new_DB_file.close();
+
+		DB_file.open("DB.json");
+	}
+
+	json data = json::parse(DB_file)["Nodes"];
+
+	cout << "Found nodes: " << size(data) << endl;
+
+	DB_file.close();
+};
 
 int main(int argc, char const *argv[])
 {
-	Node n;
-	for (const auto& container : n.fields)
-	{
-	    if (std::holds_alternative<IntField>(container)) {
-	        std::cout << "int value: " << std::get<IntField>(container).value << std::endl;
-	    } else if (std::holds_alternative<BoolField>(container)) {
-	        std::cout << "double value: " << std::get<BoolField>(container).value << std::endl;
-	    } else if (std::holds_alternative<StringField>(container)) {
-	        std::cout << "string value: " << std::get<StringField>(container).value << std::endl;
-	    }
-	}
+	Node node;
+
+	ReadDBFile(argv[1]);
+
 	return 0;
 };
